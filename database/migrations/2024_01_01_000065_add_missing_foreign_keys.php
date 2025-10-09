@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class AddRemainingForeignKeys extends Migration
+class AddMissingForeignKeys extends Migration
 {
     /**
      * Check if a foreign key constraint exists for a given table and column
@@ -24,6 +24,69 @@ class AddRemainingForeignKeys extends Migration
     }
     public function up()
     {
+        // Add foreign key for teacher_attendance.user_id (skip if already exists)
+        if (!$this->foreignKeyExists('teacher_attendance', 'user_id')) {
+            Schema::table('teacher_attendance', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
+        
+        // Add foreign key for teacher_attendance.school_id (skip if already exists)
+        if (!$this->foreignKeyExists('teacher_attendance', 'school_id')) {
+            Schema::table('teacher_attendance', function (Blueprint $table) {
+                $table->foreign('school_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
+
+        // Add foreign key for groups.school_id (skip if already exists)
+        if (!$this->foreignKeyExists('groups', 'school_id')) {
+            Schema::table('groups', function (Blueprint $table) {
+                $table->foreign('school_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
+
+        // Add foreign key for group_members.user_id (skip if already exists)
+        if (!$this->foreignKeyExists('group_members', 'user_id')) {
+            Schema::table('group_members', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
+
+        // Add foreign key for messages.sender_id (skip if already exists)
+        if (!$this->foreignKeyExists('messages', 'sender_id')) {
+            Schema::table('messages', function (Blueprint $table) {
+                $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
+
+        // Add foreign key for feed.user_id (skip if already exists)
+        if (!$this->foreignKeyExists('feed', 'user_id')) {
+            Schema::table('feed', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
+
+        // Add foreign key for feed_comments.user_id (skip if already exists)
+        if (!$this->foreignKeyExists('feed_comments', 'user_id')) {
+            Schema::table('feed_comments', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
+
+        // Add foreign key for feed_likes.user_id (skip if already exists)
+        if (!$this->foreignKeyExists('feed_likes', 'user_id')) {
+            Schema::table('feed_likes', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
+
+        // Add foreign key for announcements.user_id (skip if already exists)
+        if (!$this->foreignKeyExists('announcements', 'user_id')) {
+            Schema::table('announcements', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
+
         // Add foreign key for push_notifications.user_id (skip if already exists)
         if (!$this->foreignKeyExists('push_notifications', 'user_id')) {
             Schema::table('push_notifications', function (Blueprint $table) {
@@ -31,24 +94,10 @@ class AddRemainingForeignKeys extends Migration
             });
         }
 
-        // Add foreign key for push_notifications.sale_id (skip if already exists)
-        if (!$this->foreignKeyExists('push_notifications', 'sale_id')) {
-            Schema::table('push_notifications', function (Blueprint $table) {
-                $table->foreign('sale_id')->references('id')->on('sale')->onDelete('set null');
-            });
-        }
-
-        // Add foreign key for push_notifications.student_id (skip if already exists)
-        if (!$this->foreignKeyExists('push_notifications', 'student_id')) {
-            Schema::table('push_notifications', function (Blueprint $table) {
-                $table->foreign('student_id')->references('id')->on('students')->onDelete('set null');
-            });
-        }
-
         // Add foreign key for activity_logs.user_id (skip if already exists)
         if (!$this->foreignKeyExists('activity_logs', 'user_id')) {
             Schema::table('activity_logs', function (Blueprint $table) {
-                $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             });
         }
 
@@ -77,13 +126,6 @@ class AddRemainingForeignKeys extends Migration
         if (!$this->foreignKeyExists('teacher_leaves', 'teacher_id')) {
             Schema::table('teacher_leaves', function (Blueprint $table) {
                 $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
-            });
-        }
-
-        // Add foreign key for teacher_leaves.school_id (skip if already exists)
-        if (!$this->foreignKeyExists('teacher_leaves', 'school_id')) {
-            Schema::table('teacher_leaves', function (Blueprint $table) {
-                $table->foreign('school_id')->references('id')->on('users')->onDelete('cascade');
             });
         }
 
@@ -129,38 +171,10 @@ class AddRemainingForeignKeys extends Migration
             });
         }
 
-        // Add foreign key for groups.school_id (skip if already exists)
-        if (!$this->foreignKeyExists('groups', 'school_id')) {
-            Schema::table('groups', function (Blueprint $table) {
+        // Add foreign key for teacher_leaves.school_id (skip if already exists)
+        if (!$this->foreignKeyExists('teacher_leaves', 'school_id')) {
+            Schema::table('teacher_leaves', function (Blueprint $table) {
                 $table->foreign('school_id')->references('id')->on('users')->onDelete('cascade');
-            });
-        }
-
-        // Add foreign key for group_members.user_id (skip if already exists)
-        if (!$this->foreignKeyExists('group_members', 'user_id')) {
-            Schema::table('group_members', function (Blueprint $table) {
-                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            });
-        }
-
-        // Add foreign key for messages.sender_id (skip if already exists)
-        if (!$this->foreignKeyExists('messages', 'sender_id')) {
-            Schema::table('messages', function (Blueprint $table) {
-                $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
-            });
-        }
-
-        // Add foreign key for feed_comments.user_id (skip if already exists)
-        if (!$this->foreignKeyExists('feed_comments', 'user_id')) {
-            Schema::table('feed_comments', function (Blueprint $table) {
-                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            });
-        }
-
-        // Add foreign key for feed_likes.user_id (skip if already exists)
-        if (!$this->foreignKeyExists('feed_likes', 'user_id')) {
-            Schema::table('feed_likes', function (Blueprint $table) {
-                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             });
         }
     }
@@ -168,23 +182,7 @@ class AddRemainingForeignKeys extends Migration
     public function down()
     {
         // Drop foreign keys in reverse order
-        Schema::table('feed_likes', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-        });
-
-        Schema::table('feed_comments', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-        });
-
-        Schema::table('messages', function (Blueprint $table) {
-            $table->dropForeign(['sender_id']);
-        });
-
-        Schema::table('group_members', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-        });
-
-        Schema::table('groups', function (Blueprint $table) {
+        Schema::table('teacher_leaves', function (Blueprint $table) {
             $table->dropForeign(['school_id']);
         });
 
@@ -207,7 +205,6 @@ class AddRemainingForeignKeys extends Migration
         });
 
         Schema::table('teacher_leaves', function (Blueprint $table) {
-            $table->dropForeign(['school_id']);
             $table->dropForeign(['teacher_id']);
         });
 
@@ -228,8 +225,43 @@ class AddRemainingForeignKeys extends Migration
         });
 
         Schema::table('push_notifications', function (Blueprint $table) {
-            $table->dropForeign(['student_id']);
-            $table->dropForeign(['sale_id']);
+            $table->dropForeign(['user_id']);
+        });
+
+        Schema::table('announcements', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+
+        Schema::table('feed_likes', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+
+        Schema::table('feed_comments', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+
+        Schema::table('feed', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+
+        Schema::table('messages', function (Blueprint $table) {
+            $table->dropForeign(['sender_id']);
+        });
+
+        Schema::table('group_members', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+
+        Schema::table('groups', function (Blueprint $table) {
+            $table->dropForeign(['school_id']);
+        });
+
+        Schema::table('assessment_age_groups', function (Blueprint $table) {
+            $table->dropForeign(['school_id']);
+        });
+
+        Schema::table('teacher_attendance', function (Blueprint $table) {
+            $table->dropForeign(['school_id']);
             $table->dropForeign(['user_id']);
         });
     }
