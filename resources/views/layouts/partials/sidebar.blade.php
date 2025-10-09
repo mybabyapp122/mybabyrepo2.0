@@ -61,10 +61,5 @@
                 </a>
             </li>
         </ul>
-        
-        <div class="copyright">
-            <p><strong>{{ trans('panel.site_title') }}</strong></p>
-            <p class="fs-12">Made with <span class="heart"></span> by DexignLab</p>
-        </div>
     </div>
 </div>
