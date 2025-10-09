@@ -28,31 +28,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     Route::resource('users', 'UsersController');
 
-    // Students
-    Route::get('students', function () {
-        return view('admin.students.index');
-    })->name('students.index');
-    
-    Route::get('students/create', function () {
-        return view('admin.students.create');
-    })->name('students.create');
-
-    // Teachers
-    Route::get('teachers', function () {
-        return view('admin.teachers.index');
-    })->name('teachers.index');
-    
-    Route::get('teachers/create', function () {
-        return view('admin.teachers.create');
-    })->name('teachers.create');
-
-    // Watch
-    Route::delete('watches/destroy', 'WatchController@massDestroy')->name('watches.massDestroy');
-    Route::resource('watches', 'WatchController');
-
-    // Category
-    Route::delete('categories/destroy', 'CategoryController@massDestroy')->name('categories.massDestroy');
-    Route::resource('categories', 'CategoryController');
+    // Additional routes can be added here
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Profile routes
