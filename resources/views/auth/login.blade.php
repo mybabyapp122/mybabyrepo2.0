@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 @section('content')
     <div class="d-flex justify-content-center h-100 align-items-center">
         <div class="authincation-content style-2">
